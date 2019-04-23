@@ -1,0 +1,386 @@
+\documentclass{article}
+\usepackage{pgf,tikz,tikzscale} 
+\usepackage{amssymb}
+\usepackage{tcolorbox}
+\usepackage{xcolor}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{multicol}
+\usepackage{enumerate}	
+\usepackage{graphicx,lipsum,pgfplots} 
+\usepackage{amsmath, amsthm}                 
+\usepackage[top=1in,bottom=1in, left=.5in, right=.5in] {geometry}  
+\usepackage{fancyhdr}       
+
+
+%% \Var{X}
+%\newcommand{\Var}{\text{\Large{Var}}}
+\newcommand{\Var}{\operatorname{Var}} %% \Var{X}
+\newcommand{\Cov}{\operatorname{Cov}}
+
+\pagestyle{fancy}              
+\lhead{Stat 5930 \newline Homework 1b}   
+\rhead{Warren Keil}
+
+
+
+
+
+
+
+\begin{document}
+\setlength{\parindent}{0cm}   %%%%%%%% KEEP THIS  for block style para. 
+
+
+
+%%%%%%%%%%%%%%%%%        1a   %%%%%%%%%%%%%%%%%%%%
+\textbf{Exercises 1b}
+\\
+\textbf{2.} If \(X_1, \ldots, X_n\) are independent random variables with common mean \(\mu\) and variances \( \sigma_1^2, \ldots, \sigma_n^2\), show that \( \sum_i \frac{ (X_i - \bar X )^2}{n(n-1)} \) is an unbiased estimator of \(\Var[\bar X] \). 
+
+
+\vspace{3mm} 
+
+
+\textit{Solution.} First observe the following \(\Var[X] = \frac{1}{n^2} \sum_i \sigma_i^2 \) and 
+\begin{align*}
+\sum_i (X_i - \bar X)^2 &= \sum_i (X_i^2 - 2X_i \bar X + \bar X^2) \\
+&= \sum_i X_i^2 - 2 \bar X\sum X_i +  n\bar X^2 \\
+&= \sum_i X_i^2 - 2n \bar X^2 +  n\bar X^2 \\
+&= \sum_i X_i^2 - n \bar X^2
+\end{align*} 
+
+Thus, we find 
+\begin{align*}
+E\left[ \sum_i \frac{ (X_i - \bar X )^2}{n(n-1)} \right] &= \frac1{n(n-1)} E\left[\sum_i(X_i - \bar X )^2\right] \\
+&= \frac1{n(n-1)} E\left[\sum_i X_i^2- n\bar X^2\right] \\
+&= \frac1{n(n-1)} \left( \sum_i E[X_i^2]- nE[\bar X^2] \right) \\
+&= \frac1{n(n-1)} \left( \sum_i (\sigma_i^2 + \mu^2) -n(\Var[\bar X] + \mu^2) \right) \\ 
+&= \frac1{n(n-1)} \left( \sum_i \sigma_i^2 + n\mu^2 -n\Var[\bar X] + n\mu^2 \right) \\ 
+&= \frac1{n(n-1)} \left( n^2 \Var[\bar X] - n\Var[\bar X] \right)\\
+&= \frac1{n(n-1)}  n(n-1) \Var[\bar X] \\
+&= \Var[\bar X] 
+\end{align*} 
+
+
+\begin{flushright}
+\(\blacksquare\) 
+\end{flushright}
+
+\newpage
+\textbf{5a.} Let \(X_i\)s be independent \(N(\mu, \sigma^2)\) random variables. Let \[
+S^2 = \frac{1}{n-1} \sum_i (X_i-\bar X)^2
+\]
+
+Show that \(Var[S^2]=2\sigma^4/(n-1) \).
+
+\vspace{3mm} 
+
+
+\textit{Solution.} First, we showed previously that \(\sum_{i=1}^{n-1} (X_{i+1} -X_{i} )^2= X'AX \) where \( A = I_n - \frac1n J_n\). Thus \(S^2= \frac1{n-1}X'AX\). Thus, \(\Var[S^2]= \Var[\frac1{n-1}X'AX]\). By theorem 1.6, if we denote \(\theta_i\) to be the mean of \(X_i\) and \(\mu_i\) to denote the \(i^{th}\) common central moment of any of the \(X_i\)s and let \(a\) be the diagonal elements of \(A\), we get, 
+\begin{align*} 
+\Var[\frac1{n-1}X'AX] &= \frac1{(n-1)^2} \Var[X'AX] \\ 
+&= \frac1{(n-1)^2} (\mu_4-3\mu^2) a'a + 2\mu_2^2 tr(A^2) + 4\mu_2 \theta'A^2 \theta + 4\mu_3\theta'Aa\\ 
+&= \frac1{(n-1)^2} (3\sigma^4 - 3\sigma^4)a'a + 2\sigma^4 tr(A^2) + 4\sigma^2\theta'A^2\theta + 0 \\
+&= \frac1{(n-1)^2}  2\sigma^4 tr(A^2) + 4\sigma^2\theta'A^2\theta + 0 \\
+&=\frac1{(n-1)^2}  2\sigma^4 tr\left(
+\begin{bmatrix}
+1-\frac1n & -\frac1n &\cdots&-\frac1n \\
+-\frac1n & 1-\frac1n &\cdots & -\frac1n \\
+\vdots & \cdots & \ddots& \vdots\\
+-\frac1n & \cdots &\cdots &1-\frac1n 
+\end{bmatrix} \cdot
+\begin{bmatrix}
+1-\frac1n & -\frac1n &\cdots&-\frac1n \\
+-\frac1n & 1-\frac1n &\cdots & -\frac1n \\
+\vdots & \cdots & \ddots& \vdots\\
+-\frac1n & \cdots &\cdots &1-\frac1n 
+\end{bmatrix}\right) + 4\sigma^2 \sum(u_i-\bar \theta)^2\\ 
+&=\frac1{(n-1)^2}  2\sigma^4\left[ \underbrace{\frac{(n-1)^2}{n^2} +\frac1{n^2} + \frac1{n^2} +\cdots + \frac1{n^2}}_{\text{n times} } +\cdots +  \underbrace{\frac{(n-1)^2}{n^2} +\frac1{n^2} + \frac1{n^2} +\cdots + \frac1{n^2}}_{\text{n times}}\right]\\
+&= \frac1{(n-1)^2}  2\sigma^4\left[ \underbrace{\frac1{n^2}[(n-1)^2 + (n-1)]  +  \frac1{n^2}[(n-1)^2 + (n-1)]  + \cdots + \frac1{n^2}[(n-1)^2 + (n-1)]  }_{\text{n times} }   \right] \\
+&= 2\sigma^4\left[ \frac{n(n-1)^2+(n-1))}{(n-1)^2 n^2}  \right] \\
+&=  2\sigma^4\frac{ (n-1) +1}{(n-1)n} \\
+&=2\sigma^4\frac{n}{(n-1)n} \\
+&= \frac{2\sigma^4}{n-1} 
+\end{align*}
+\begin{flushright}
+\(\blacksquare\) 
+\end{flushright}
+
+\newpage 
+\textbf{5b.} Let \(X_i\)s be independent \(N(\mu, \sigma^2)\) random variables. Let \[
+Q = \frac{1}{2(n-1)} \sum_{i=1}^{n-1} (X_{i+1} -X_{i} )^2
+\]
+Show that \(Q\) is an unbiased estimate of \(\sigma^2\). 
+
+\vspace{3mm} 
+\textit{Solution.} First let 
+\[Y=
+\begin{bmatrix}
+x_2-x_1 \\
+x_3-x_2\\
+\vdots\\
+x_n-x_{n-1}
+\end{bmatrix}
+\]Then is follows that \(Y = BX\), 
+\[
+Y=
+\begin{bmatrix}
+x_2-x_1 \\
+x_3-x_2\\
+\vdots\\
+x_n-x_{n-1}
+\end{bmatrix}
+=
+\begin{bmatrix}
+-1 & 1 & 0 & \cdots & 0\\
+0 & -1& 1 & \cdots & 0 \\
+\vdots & 0& \ddots & \ddots &\vdots\\
+0 &0& \cdots & -1&1
+\end{bmatrix}
+\begin{bmatrix}
+X_1\\
+X_2\\
+\vdots\\
+X_n
+\end{bmatrix} = BX.
+\]
+Notice that \(Y'Y= \sum_{i=1}^{n-1} (X_{i+1} -X_{i} )^2 \). Thus \((BX)'(BX) =  \sum_{i=1}^{n-1} (X_{i+1} -X_{i} )^2 \). And \((BX)'(BX) = X'B'BX\). So if we let \(A=B'B\), then \(2(n-1)Q=X'AX\). To find \(A\) we get
+\[
+B'B=
+\begin{bmatrix}
+-1 & 0 &0& \cdots & 0\\
+1 & -1 &0 &\cdots &0 \\
+0 & 1 & -1 &  \cdots &0\\
+\vdots&\cdots& \ddots&\ddots &\vdots \\
+0&\cdots&0& 1&-1 
+\end{bmatrix}\cdot
+\begin{bmatrix}
+-1 & 1 & 0 & \cdots & 0\\
+0 & -1& 1 & \cdots & 0 \\
+\vdots & \cdots& \ddots & \ddots &\vdots\\
+0 &0& \cdots & -1&1
+\end{bmatrix}=
+\begin{bmatrix}
+1 & -1 & 0 & 0 & \cdots & 0 \\
+-1 & 2 & -1 & 0 & \cdots&0 \\
+0 & -1 & 2 & -1 & \ddots &\vdots \\
+\vdots & \vdots & \ddots&\ddots &\ddots& 0\\
+0&  \cdots & 0 &-1&2&-1 \\
+0 & 0& \cdots & 0 & -1&1
+\end{bmatrix}=A
+\]
+Then, by theorem 1.5,
+\begin{align*}
+ E[Q]&= \frac{1}{2(n-1)} E[X'AX] \\
+ &=\frac{1}{2(n-1)}( tr(A\Sigma) + \mu'A\mu) \\
+ &=\frac{1}{2(n-1)}(tr
+ \begin{bmatrix}
+1 & -1 & 0 & 0 & \cdots & 0 \\
+-1 & 2 & -1 & 0 & \cdots&0 \\
+0 & -1 & 2 & -1 & \ddots &\vdots \\
+\vdots & \vdots & \ddots&\ddots &\ddots& 0\\
+0&  \cdots & 0 &-1&2&-1 \\
+0 & 0& \cdots & 0 & -1&1
+\end{bmatrix}\cdot
+\begin{bmatrix}
+\sigma^2 & 0 & 0 &\cdots & 0\\
+0 & \sigma^2 & 0&  \cdots&0\\
+\vdots &\ddots & \ddots& \ddots&\vdots\\
+0& \cdots& 0 & \sigma^2 & 0 \\
+0& \cdots& \cdots & 0 &\sigma^2
+\end{bmatrix} + \mu'A\mu) \\
+&= \frac{1}{2(n-1)}( \sigma^2 + 2n\sigma^2+\sigma^2 + 0) \hspace{8mm} \text{since  } \mu'A= 0  \Rightarrow \mu'A\mu=0 \\
+&= \frac{1}{2(n-1)}( 2n\sigma^2 + 2 \sigma^2) \\
+&= \frac{\sigma^2\cdot 2\cdot(n-1)}{2(n-1)} \\
+&= \sigma^2 
+\end{align*}
+\begin{flushright}
+\(\blacksquare\) 
+\end{flushright}
+
+\newpage
+\textbf{5c.} Find the variance of \(Q\) and then show that as \(n \rightarrow \infty\), the efficiency relative to \(S^2\) is \(\frac23\). 
+
+
+\vspace{5mm}
+
+\textit{Solution. } We already proved in part A that \(\Var[S^2] = 2\sigma^4 /(n-1) \) . To find the variance of \(Q\), we will use its quadratic form representation shown in part \(b\) and then use theorem 1.6. Thus, 
+
+\begin{align*}
+\Var[Q]&= \Var[\frac{1}{2(n-1)}X'AX] \\
+&= \frac{1}{4(n-1)^2} \Var[X'AX]\\
+&=  \frac{1}{4(n-1)^2} [(\mu_4-3\mu^2) a'a + 2\mu_2^2 tr(A^2) + 4\mu_2 \theta'A^2 \theta + 4\mu_3\theta'Aa] \\
+&=  \frac{1}{4(n-1)^2} [0 +  2\mu_2^2 tr(A^2) + 4\mu_2 \theta'A^2 \theta + 0] \\
+&=  \frac{1}{4(n-1)^2} [ 2\sigma^4 tr(A^2) + 4\sigma^2 \theta'A^2 \theta] \\
+&=  \frac{1}{4(n-1)^2} [ 2\sigma^4 tr(  \begin{bmatrix}
+1 & -1 & 0 & 0 & \cdots & 0 \\
+-1 & 2 & -1 & 0 & \cdots&0 \\
+0 & -1 & 2 & -1 & \ddots &\vdots \\
+\vdots & \vdots & \ddots&\ddots &\ddots& 0\\
+0&  \cdots & 0 &-1&2&-1 \\
+0 & 0& \cdots & 0 & -1&1
+\end{bmatrix} \begin{bmatrix}
+1 & -1 & 0 & 0 & \cdots & 0 \\
+-1 & 2 & -1 & 0 & \cdots&0 \\
+0 & -1 & 2 & -1 & \ddots &\vdots \\
+\vdots & \vdots & \ddots&\ddots &\ddots& 0\\
+0&  \cdots & 0 &-1&2&-1 \\
+0 & 0& \cdots & 0 & -1&1
+\end{bmatrix})+ 4\sigma^2 \theta'A^2 \theta] \\
+&= \frac{1}{4(n-1)^2} [ 2\sigma^4 tr(
+\begin{bmatrix}
+ 2 & -3 & 1 & 0 & \cdots & 0 \\
+ -3 & 6 & -4 & 1 & \ddots & \vdots \\
+ 1 & -4 & 6 & \ddots & \ddots & 0 \\
+ 0 & 1 & \ddots & \ddots& -4 & 1 \\
+ \vdots & \ddots & \ddots & -4 & 6 & -3 \\
+ 0 & \cdots & 0 & 1 & -3 & 2 \\
+\end{bmatrix})+ 4\sigma^2 \theta' 
+\begin{bmatrix}
+ 2 & -3 & 1 & 0 & \cdots & 0 \\
+ -3 & 6 & -4 & 1 & \ddots & \vdots \\
+ 1 & -4 & 6 & \ddots & \ddots & 0 \\
+ 0 & 1 & \ddots & \ddots& -4 & 1 \\
+ \vdots & \ddots & \ddots & -4 & 6 & -3 \\
+ 0 & \cdots & 0 & 1 & -3 & 2 \\
+\end{bmatrix}
+ \theta] \\ 
+ &= \frac{1}{4(n-1)^2} [ 2\sigma^4 (4+6(n-2)) ] \\
+ &= \frac{1}{4(n-1)^2} [2\sigma^4(6n-8)] \\
+ &= \frac{4\sigma^4(3n-4)}{4(n-1)^2} \\
+ &= \frac{\sigma^4(3n-4)}{(n-1)^2} 
+\end{align*}
+Thus, 
+\begin{align*}
+\lim_{n\rightarrow \infty} \Var[Q]/\Var[S^2] &= \lim_{n\rightarrow \infty} \frac{(3n-4)(n-1)  }{2(n-1)^2}\\
+&= \lim_{n\rightarrow \infty} \frac{ 3n^2-7n+4 }{2n^2-4n+2}\\
+&= \frac32
+\end{align*}
+\begin{flushright}
+\(\blacksquare\) 
+\end{flushright}
+
+\newpage
+\textbf{Miscellaneous Exercise 2. } 
+Let \(X = [X_1, X_2, X_3]' \)with
+\[
+\Var[X] = \begin{bmatrix}
+5&2&3\\
+2&3&0\\
+3&0&3
+\end{bmatrix}
+\]
+First find the variance of \( Y= X_1-2X_2+X_3\). 
+
+
+\textit{Solution.} Notice \[
+Y=\begin{bmatrix}
+1&-2& 1
+\end{bmatrix}
+\begin{bmatrix}
+X_1\\
+X_2\\
+X_3
+\end{bmatrix}
+= AX
+\]
+Since \(\Var[AX] = A\Var[X]A'\), we get
+\begin{align*}
+\Var[Y] &=  A\Var[X]A'\\
+&= \begin{bmatrix}
+1&-2& 1
+\end{bmatrix}
+\begin{bmatrix}
+5&2&3\\
+2&3&0\\
+3&0&3
+\end{bmatrix}\begin{bmatrix}
+1\\
+-2\\
+1
+\end{bmatrix} \\ 
+&= \begin{bmatrix}
+4 & -4 & 6 
+\end{bmatrix}\begin{bmatrix}
+1\\-2\\1
+\end{bmatrix}\\
+&=18
+\end{align*}
+Next, find the variance of \(Y = (Y_1 \hspace{2mm}  Y_2)'\) where \(Y_1= X_1+X_2\), and \(Y_2 = X_1+X_2+X_3\). 
+
+\textit{Solution.} Notice \(Y= AX\) where \[
+A= \begin{bmatrix}
+1&1&0\\
+1&1&1
+\end{bmatrix}
+\]
+
+Thus, the variance of \(Y\) is
+\begin{align*}
+\Var[Y] &= \Var[AX]\\
+&= A\Var[X]A'\\
+&=\begin{bmatrix}
+1&1&0\\
+1&1&1
+\end{bmatrix}
+\begin{bmatrix}
+5&2&3\\
+2&3&0\\
+3&0&3
+\end{bmatrix}
+\begin{bmatrix}
+1&1\\
+1&1\\
+0&1
+\end{bmatrix} \\
+&= 
+\begin{bmatrix}
+7 & 5&3 \\
+10 & 5 & 6 
+\end{bmatrix}
+\begin{bmatrix}
+1&1\\
+1&1\\
+0&1
+\end{bmatrix}
+\\
+&= 
+\begin{bmatrix}
+12 & 15\\
+ 15 & 21
+\end{bmatrix}.
+\end{align*}
+ \begin{flushright}
+ \(\qed\)
+ \end{flushright} 
+
+
+
+
+
+
+\end{document} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

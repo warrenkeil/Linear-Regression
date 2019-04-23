@@ -1,0 +1,78 @@
+\documentclass{article}
+\usepackage[T1]{fontenc}
+\usepackage{pgf,tikz,tikzscale} 
+\usepackage{amssymb}
+\usepackage{tcolorbox}
+\usepackage{xcolor}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{multicol}
+\usepackage{enumerate}	
+\usepackage{graphicx,lipsum,pgfplots} 
+\usepackage{amsmath, amsthm}                 
+\usepackage[top=1in,bottom=1in, left=.5in, right=.5in] {geometry}  
+\usepackage{fancyhdr}       
+
+\newcommand{\Var}{\operatorname{Var}} %% \Var{X}
+\newcommand{\Cov}{\operatorname{Cov}}
+
+\newcommand{\var}{\operatorname{var}} %% \Var{X}
+\newcommand{\cov}{\operatorname{cov}}
+
+\pagestyle{fancy}              
+\lhead{Stat 5930 \newline Homework Chapter 3 \#7}   
+\rhead{Warren Keil}
+
+
+
+
+
+
+\begin{document}
+\setlength{\parindent}{0cm}   %%%%%%%% KEEP THIS  for block style para. 
+
+
+
+%%%%%%%%%%%%%%%%%        1a   %%%%%%%%%%%%%%%%%%%%
+\textbf{1.} Use the definition of estimable functions to show that if \(X\) has full rank, then every \(a'\beta\) is estimable and in particular, every individual parameter \(\beta_i\) is estimable. 
+
+
+\vspace{5mm}
+\textbf{\textsc{ Solution.}} Let \(a'\beta\) be some function such that \(\beta\) is from the model \(Y=X\beta + \epsilon\). Suppose that \(X\) has full rank. Then if \(\beta\) has \(p\) rows, then \(X\) must have \(p \) linearly independent columns. Thus the column space of \(X\) is \(C(X) = \mathbb{R}^p\). And if follows that \(a\) must have \(p\) elements. Thus \(a\in\mathbb{R}^p\). Thus, \(a \in C(X)\). And we know that a function \(a'\beta\) is estimable \(\iff\) \(a \in C(X')\). 
+
+\begin{flushright}
+\(\qed\)\end{flushright}
+
+
+
+\end{document} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

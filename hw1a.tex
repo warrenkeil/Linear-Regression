@@ -1,0 +1,177 @@
+\documentclass{article}
+\usepackage{pgf,tikz,tikzscale} 
+\usepackage{amssymb}
+\usepackage{tcolorbox}
+\usepackage{xcolor}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{multicol}
+\usepackage{enumerate}	
+\usepackage{graphicx,lipsum,pgfplots} 
+\usepackage{amsmath, amsthm}                 
+\usepackage[top=1in,bottom=1in, left=.5in, right=.5in] {geometry}  
+\usepackage{fancyhdr}       
+
+\newcommand{\Var}{\operatorname{Var}} %% \Var{X}
+\newcommand{\Cov}{\operatorname{Cov}}
+
+\pagestyle{fancy}              
+\lhead{Stat 5930 \newline Homework 1a}   
+\rhead{Warren Keil}
+
+
+
+
+
+
+
+\begin{document}
+\setlength{\parindent}{0cm}   %%%%%%%% KEEP THIS  for block style para. 
+
+
+
+%%%%%%%%%%%%%%%%%        1a   %%%%%%%%%%%%%%%%%%%%
+\textbf{Exercises 1a}
+\\
+\textbf{1.} Prove that if \textbf{a} is a vector of constants with the same dimension as the random vector \textbf{X}, then 
+\[
+E[(\textbf{X}-\textbf{a})(\textbf{X}-\textbf{a})'] = \Var[\textbf{X}]+(E[\textbf{X}]-\textbf{a})(E[\textbf{X}]-\textbf{a})' 
+\]
+
+If \(\Var[\textbf{X}] = \Sigma = (\sigma_{ij}) \), deduce that 
+\[
+E[ ||\textbf{X}-\textbf{a}||^2] = \sum_i \sigma_{ii} + ||E[\textbf{X}]-\textbf{a}||^2 
+\]
+\vspace{2mm}
+
+\textit{Solution.} For the first part of the problem, let \(\textbf{Y}=\textbf{X-a}\). Then \(\textbf{X} = \textbf{Y+a}\). Thus, 
+
+\begin{align*}
+E[(\textbf{X}-\textbf{a})(\textbf{X}-\textbf{a})'] &= E[\textbf{Y}\textbf{Y}'] \\
+&= \Var[\textbf{Y}] + E[\textbf{Y}]E[\textbf{Y}]'  \\
+&= \Var[\textbf{Y}] + E[\textbf{Y}+\textbf{a} -\textbf{a}]E[\textbf{Y}+\textbf{a}-\textbf{a}]' \\
+&= \Var[\textbf{Y}] + (E[\textbf{Y}+\textbf{a} ]-\textbf{a})(E[\textbf{Y}+\textbf{a}]-\textbf{a}') \\
+&= \Var[\textbf{X+a}] + (E[\textbf{X}]-\textbf{a})(E[\textbf{X}]-\textbf{a}') \\
+&= \Var[\textbf{X}] + (E[\textbf{X}]-\textbf{a})(E[\textbf{X}]-\textbf{a}')
+\end{align*}
+
+\begin{flushright}
+\qed
+\end{flushright}
+
+\vspace{3mm} 
+Next, to show that \(E[ ||\textbf{X}-\textbf{a}||^2] = \sum_i \sigma_{ii} + ||E[\textbf{X}]-\textbf{a}||^2 \), notice, 
+\begin{align*}
+ E[ ||\textbf{X}-\textbf{a}||^2] &= E[(\textbf{X} - \textbf{a})'(\textbf{X}-\textbf{a})] \\
+ &= E[(\textbf{X}' - \textbf{a}')(\textbf{X}'-\textbf{a}')']   &&\\
+ &= \Var[\textbf{X}'] + (E[\textbf{X}]'-\textbf{a}')(E[\textbf{X}]'-\textbf{a}')' && \text{by the identity proven above}  \\ 
+ &= \Var[\textbf{X}'] + (E[\textbf{X}]-\textbf{a})'(E[\textbf{X}]-\textbf{a} ) && \\
+  &= \Var[\textbf{X}'] + ||E[\textbf{X}]-\textbf{a}||^2 && \\
+  &= E[\textbf{X}' \textbf{X}] - E[\textbf{X}]'E[\textbf{X}] + ||E[\textbf{X}]-\textbf{a}||^2 && \\
+  &= \sum_{i=1}^n E[\textbf{X}_i^2]-E[\textbf{X}_i]^2 + ||E[\textbf{X}]-\textbf{a}||^2 && \\
+  &= \sum_{i=1}^n \sigma_{ii}+ ||E[\textbf{X}]-\textbf{a}||^2 && \\
+\end{align*}
+
+\begin{flushright}
+\(\blacksquare\) 
+\end{flushright}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\textbf{3.} Let \(\mathbf{X}\) be a vector of random variables, and let \(Y_1 = X_1, Y_i = X_i-X_{i-1}, i \in \{2,3,\ldots, n\} \). If the \(Y_i \) are mutually independent random variables, each with unit variance, find \(\Var[\textbf{X}]\). 
+
+
+\vspace{2mm}
+
+\textit{Solution.} First, we observe that for any \(X_i \in \textbf{X}, X_i = \sum_{j=1}^i Y_i \). We also  see that 
+
+\[\Var[\textbf{X}_i] = \Var[\textbf{Y}_i + \textbf{Y}_{i-1} + \cdots + \textbf{Y}_2 +\textbf{Y}_1 ]=\Var[\textbf{Y}_i + \Var[\textbf{Y}_{i-1} ]+ \cdots +\Var[\textbf{Y}_2 ]+\Var[\textbf{Y}_1] = i \]
+
+This follows since each of the pairwise covariances between the \textbf{Y}s is zero and their coefficients are equal to one. 
+
+Thus, we expand the covariance matrix of \(\textbf{X}\) to find, 
+
+\begin{align*}
+\Var[\textbf{X}] &= \Cov[{X}_i, {X}_j] \\
+\\
+&= \begin{bmatrix}
+\Var[{X}_1] & \Cov[{X}_1,{X}_2] & \ldots & \Cov[{X}_1,{X}_n] \\
+\Cov[X_2,X_1] & \Var[X_2] & \ldots & \Cov[X_2, X_n] \\
+\vdots & \hdots & \ddots & \vdots \\
+\Cov[X_n,X_1] & \Cov[X_n,X_2] & \hdots & \Var[X_n] 
+\end{bmatrix} \\
+\\
+&= \begin{bmatrix}
+\Var[Y_1] & \Cov[Y_1, Y_2 + Y_1] & \hdots & \Cov[Y_1, Y_n+\cdots +Y_2+Y_1 \\
+\Cov[Y_2+Y_1,Y_1] & \Var[Y_2+Y_1] & \hdots & \Cov[Y_2+Y_1,  Y_n+\cdots +Y_2+Y_1 \\
+\vdots & \hdots & \ddots & \vdots  \\
+\Cov[Y_n+\cdots +Y_2+Y_1,Y_1] & \Cov[Y_n+\cdots +Y_2+Y_1,Y_2+Y_1] & \hdots & \Var[Y_n+\cdots +Y_2+Y_1]
+\end{bmatrix}
+\end{align*}
+Upon expansion of an arbitrary \(\Cov[X_i,X_j] = \Cov[Y_i + Y_{i-1}+ \cdots + Y_2+Y_1,Y_j+ Y_{j-1}+ \cdots + Y_2+Y_1] \), we quickly find the all of the covariance terms for \(i \not =j\) go to zero and we are left with the \(\min\{i,j\}\) variance terms which are each equal to one. Thus,
+\[
+\Var[\textbf{X}]  = \Sigma = \sigma_{ij} = \min\{i,j\} \]
+
+\begin{flushright}
+\(\blacksquare\) 
+\end{flushright}
+
+\newpage
+\textbf{4.} If \(X_1, X_2, \ldots, X_n \) are random variables satisfying \(X_{i+1} = \rho X_i \) , where \(\rho\) is constant, and \(\Var[X_i]=\sigma^2\), find \( \Var[\textbf{X}] \).
+
+\vspace{2mm}
+
+\textit{Solution.}  First, observe that each \(X_i = \rho^{i-1} X_1\). We also get that \(\Var[X_i] = \Var[\rho^{i-1}X_1] = \rho^{2i - 2} \Var[X_1] = \rho^{(2i - 2)} \sigma^2 \). Next we look at an arbitrary covariance term and find \(\Cov[X_i,X_j] = \Cov[\rho^{i-1} X_1, \rho^{j-1}X_1] = \rho^{i+j-2} \sigma^2 \). Thus, when expanding the covariances matrix of  \(\textbf{X}\), it is easy to see that, 
+
+\begin{align*}
+\Var[\textbf{X}] &= \Cov[X_i,X_j]\\
+\\
+ &= \begin{bmatrix}
+\Var[{X}_1] & \Cov[{X}_1,{X}_2] & \ldots & \Cov[{X}_1,{X}_n] \\
+\Cov[X_2,X_1] & \Var[X_2] & \ldots & \Cov[X_2, X_n] \\
+\vdots & \hdots & \ddots & \vdots \\
+\Cov[X_n,X_1] & \Cov[X_n,X_2] & \hdots & \Var[X_n] 
+\end{bmatrix} \\
+\\
+ &= \begin{bmatrix}
+\Var[{X}_1] & \Cov[{X}_1, \rho X_1] & \ldots & \Cov[{X}_1,\rho^{n-1}X_1] \\
+\Cov[\rho X_1,X_1] & \Var[\rho X_1] & \ldots & \Cov[\rho X_1, \rho^{n-1}X_1] \\
+\vdots & \hdots & \ddots & \vdots \\
+\Cov[\rho^{n-1}X_1,X_1] & \Cov[\rho^{n-1}X_1,\rho X_1] & \hdots & \Var[\rho^{n-1}X_1] 
+\end{bmatrix} \\
+\\
+ &= \begin{bmatrix}
+ \sigma^2 & \rho \sigma^2 & \ldots &\rho^{n-1}\sigma^2 \\
+\rho \sigma^2 & \rho^2 \sigma^2 & \ldots & \rho^n \sigma^2 \\
+\vdots & \hdots & \ddots & \vdots \\
+\rho^{n-1}\sigma^2& \rho^{n}\sigma^2& \hdots & \rho^{2n-2} \sigma^2
+\end{bmatrix}
+\end{align*}
+
+Thus, we find that \(\Var[\textbf{X}] = \Sigma = \sigma_{ij} = \rho^{i+j-2} \sigma^2 \)
+
+\begin{flushright}
+\(\blacksquare\) 
+\end{flushright}
+
+%Alternatively, if \(\mathbf{X} = (X_1,X_2, \ldots, X_n)^T \) and \(\mathbf{a} = (1, \rho, \rho^2, \ldots, \rho^{n-1} )^T \) 
+
+
+
+
+\end{document} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,202 @@
+\documentclass{article}
+\usepackage[T1]{fontenc}
+\usepackage{pgf,tikz,tikzscale} 
+\usepackage{amssymb}
+\usepackage{tcolorbox}
+\usepackage{xcolor}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{multicol}
+\usepackage{enumerate}	
+\usepackage{graphicx,lipsum,pgfplots} 
+\usepackage{amsmath, amsthm}                 
+\usepackage[top=1in,bottom=1in, left=.5in, right=.5in] {geometry}  
+\usepackage{fancyhdr}       
+
+\newcommand{\Var}{\operatorname{Var}} %% \Var{X}
+\newcommand{\Cov}{\operatorname{Cov}}
+
+\pagestyle{fancy}              
+\lhead{Stat 5930 \newline Homework Chapter 3 \#5}   
+\rhead{Warren Keil}
+
+
+
+
+
+
+\begin{document}
+\setlength{\parindent}{0cm}   %%%%%%%% KEEP THIS  for block style para. 
+
+
+
+%%%%%%%%%%%%%%%%%        1a   %%%%%%%%%%%%%%%%%%%%
+\textbf{1.} For a linear model \(Y=X\beta + \epsilon \), with \(E(\epsilon) = 0\) and \(Cov(\epsilon)=\sigma^2I_n\), the residuals are \(\hat e = (I-P)Y\) , where \(P\) is the projection matrix onto the column space of \(X\). Find the following quantities:
+
+\vspace{2mm} 
+a.)  
+\begin{align*}
+E(\hat e)&= E[(I-P)Y] \\
+&= (I-P)E[X\beta + \epsilon] \\
+&= (I-P)X\beta + E[\epsilon] \\
+&= (I - X(X'X)^{-1}X') X\beta + 0\\
+&=X\beta - X(X'X)^{-1}X' X\beta \\
+&= X\beta - X\beta\\
+&= 0.
+\end{align*} 
+ \begin{flushright}
+\(\qed\)
+\end{flushright} 
+
+b.) 
+\begin{align*}
+Cov(\hat e) &= Cov[ (I-P)( X\beta + \epsilon ) ] \\ 
+&= (I-P)^2 Cov[ \epsilon + X\beta ] \\
+&= (I-P) Cov[\epsilon ] \\
+&= (I-P)\sigma^2 I \\
+&= (I-P)\sigma^2.
+\end{align*} 
+c.)
+\begin{align*}
+Cov(\hat e,PY) &= Cov[ (I-P)Y, PY ]  \\  
+&= (I-P) \Var[Y] P' \\
+&= (I-P) \Var[\epsilon + X\beta] P' \\
+&= (I-P) \Var[\epsilon ] P'\\
+&= (I-P)\sigma^2 P\\
+&= \sigma^2 (IP-P^2)\\
+&= \sigma^2(P-P)\\
+&= 0 
+\end{align*} 
+ \begin{flushright}
+\(\qed\)
+\end{flushright} 
+
+d.) 
+\begin{align*}
+\hat e' \hat e &= Y'(I-P)'(I-P)Y \\  
+&=Y' (I-P)(I-P) Y\\
+&= Y'(I-P) Y 
+\end{align*} 
+
+ \begin{flushright}
+\(\qed\)
+\end{flushright} 
+
+\newpage
+e.) 
+\begin{align*}
+E[\hat e '\hat e] &= E[Y'(I-P) Y] \\
+&= E[ (X\beta+\epsilon)'(I-P) (X\beta + \epsilon ) ] \\
+&= E[ (X\beta+\epsilon)' (X\beta + \epsilon - PX\beta - P\epsilon ) ] \\ 
+&= E[ (X\beta+\epsilon)' ( X\beta + \epsilon - X\beta - P\epsilon ) ]\\
+&= E[ (X\beta+\epsilon)' (  \epsilon  - P\epsilon ) ] \\
+&=  E[ (X\beta+\epsilon)' (I-P) \epsilon ] \\
+&= E[\epsilon' + \beta' X')(I-P) \epsilon] \\
+&= E[ (\epsilon' + \beta' X' - \epsilon'P- \beta'X'P' ) \epsilon ] \\
+&=  E[ (\epsilon' + \beta' X' - \epsilon'P- \beta'X') \epsilon ] \\
+&=  E[ (\epsilon' - \epsilon'P) \epsilon ]  \\
+&= E[ \epsilon'(I-P) \epsilon ]  \\
+&= tr[ (I-P)\Var[\epsilon] ]+ E[\epsilon]'(I-P)E[\epsilon]  \\
+&= tr((I-P)\sigma^2) 
+\end{align*}
+ \begin{flushright}
+\(\qed\)
+\end{flushright} 
+
+
+\textbf{2. } Suppose \( \hat \beta_1 \neq \hat \beta_2\) are two different least squares estimates of \(\beta\). Show that there are infinitely many least squares estimates of \(\beta\). 
+
+\vspace{4mm} 
+\textbf{\textsc{Solution.} }Since we are given that two solutions \( \hat \beta_1 \neq \hat \beta_2\) exist, then it follows that \(X\) must not have full rank and thus there must be infinitely many solutions (since their generalized inverses must be different). To show this, let \(\hat \beta = \alpha \hat\beta_1 + (1-\alpha)\hat\beta_2\) for \(\alpha \in (0,1)\) . Then plugging into the normal equations, we get, 
+\begin{align*}
+X'X\hat\beta &= X'X(\alpha \hat\beta_1 + (1-\alpha)\hat\beta_2) \\
+&= X'X(\alpha (X'X)_1^-X'Y + (1-\alpha)(X'X)_2^-X'Y ) \\
+&= \alpha X'X(X'X)_1^- X'Y + (1-\alpha)X'X(X'X)_2^- X'Y \\
+&= \alpha X'Y +(1-\alpha)X'Y\\
+&=  \alpha X'Y + X'Y -\alpha X'Y\\
+&=X'Y
+\end{align*}
+Thus we have shown that the normal equations hold for any \(\alpha \in (0,1)\) showing there are infinitely many solutions. 
+
+ \begin{flushright}
+\(\qed\)
+\end{flushright} 
+
+ 
+\newpage
+ \textbf{3.} Let \(Y_1, ..., Y_n\) be a random sample from a distribution with mean \(\theta\) and finite variance \(\sigma^2\). Find BLUE of \(\theta\). Use the definition to justify that it is, in fact, the best linear unbiased estimate. 
+ 
+ \vspace{4mm} 
+\textbf{\textsc{Solution.} }First notice that our model is \(Y = \theta 1_n + \epsilon\) Thus the vector \(X =1_n\) has full rank. Then by the corollary to theorem 3.2, we know \(a'\hat \beta\) is the BLUE of \(a\beta\) for every vector \(a\). Thus, 
+\begin{align*}
+\hat \beta &= (X'X)^{-1} X' \hat \theta \\
+&= \frac1n\sum Y \\
+&= \bar Y
+\end{align*}
+ 
+  \begin{flushright}
+\(\qed\)
+\end{flushright} 
+
+
+\newpage
+ \textbf{4.} Let \(Y_i = B_0 + B_1X_i + \epsilon_i \) for \( i \in \{1,\ldots, n\}\), where \(E[\epsilon]=0\) and \(\Var[\epsilon]=\sigma^2 I\). Prove that the least squares of \(\beta_0\) and \(\beta_1 \) are uncorrelated iff \(\bar x = 0\). 
+
+ \vspace{4mm} 
+\textbf{\textsc{Proof.} } First observe that \(\Var[Y] = \Var[Y-X\beta] = \Var[\epsilon] = \sigma^2 I_n \). Thus we find the variance of \( \hat \beta \) is, 
+\begin{align*}
+\Var[\hat \beta] &= \Var[ (X'X)^{-1} X' Y] \\ 
+&= (X'X)^{-1} X' \Var[Y] X(X'X)^{-1}  \\
+&= (X'X)^{-1} X' \sigma^2 I_n X(X'X)^{-1}  \\
+&= \sigma^2 I_n(X'X)^{-1} X'  X(X'X)^{-1}  \\
+&= \sigma^2 (X'X)^{-1}.  \\
+\end{align*}
+Thus it follows that \( \hat \beta_0\) and \(\hat \beta_1\) are uncorrelated if and only if \(\Var[\hat \beta]_{ij} = 0, \forall i\neq j\). We also observe that since we are given there is a \(\beta_0\) and a \(\beta_1\) then 
+\[
+ X = \begin{bmatrix}
+ 1 & x_{1}\\
+ 1 &  x_{2} \\
+ \vdots&\vdots
+ \end{bmatrix}
+ \] 
+ and \(\Var[\hat \beta]\) is a 2x2 matrix and we find that \(X'X= \begin{bmatrix} n&\sum x_i \\ \sum x_i &\sum x_i^2\end{bmatrix}\) To find \((X'X)^{-1}\), we augment the identity matrix and row reduce as follows:
+ \begin{align*}
+\begin{bmatrix} n&\sum x_i  &1&0\\ 
+ \sum x_i &\sum x_i^2 & 0 & 1 \end{bmatrix} 
+ \rightarrow&
+ \begin{bmatrix} 1&\frac1n\sum x_i  & \frac1n&0\\ 
+ \sum x_i &\sum x_i^2 & 0 & 1 \end{bmatrix} 
+  \rightarrow
+ \begin{bmatrix} 1& \bar x & \frac1n&0\\ 
+0& \sum x^2 -n\bar x^2  & -\bar x & 1 \end{bmatrix} \\
+  \rightarrow
+ \begin{bmatrix} 1& 0  & \frac{\frac1n \bar x^2}{\sum x^2- n\bar x^2}&-\frac{\bar x}{\sum x^2- n\bar x^2}\\ 
+0& \sum x^2 -n\bar x^2  & -\bar x & 1 \end{bmatrix} \rightarrow& 
+ \begin{bmatrix} 1& 0  & \frac{\frac1n \bar x^2}{\sum x^2- n\bar x^2}&-\frac{\bar x}{\sum x^2- n\bar x^2}\\ 
+0& 1  & -\frac{\bar x}{\sum x^2- n\bar x^2} & \frac{1}{\sum x^2- n\bar x^2} \end{bmatrix}
+ \end{align*}
+ 
+ Thus, we find that \[
+ \Var[\beta] = \sigma^2 (X'X)^{-1} = 
+  \begin{bmatrix}  \frac{\frac1n \bar x^2}{\sum x^2- n\bar x^2}&-\frac{\bar x}{\sum x^2- n\bar x^2}\\ 
+ -\frac{\bar x}{\sum x^2- n\bar x^2} & \frac{1}{\sum x^2- n\bar x^2} \end{bmatrix}
+ \]
+and hence, \(\hat \beta_0 \) and \(\hat \beta_1\) are independent if and only if \(\bar x= 0\). 
+
+ 
+  \begin{flushright}
+\(\blacksquare\)
+\end{flushright} 
+\end{document} 
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,124 @@
+\documentclass{article}
+\usepackage{pgf,tikz,tikzscale} 
+\usepackage{amssymb}
+\usepackage{tcolorbox}
+\usepackage{xcolor}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{multicol}
+\usepackage{enumerate}	
+\usepackage{graphicx,lipsum,pgfplots} 
+\usepackage{amsmath, amsthm}                 
+\usepackage[top=1in,bottom=1in, left=.5in, right=.5in] {geometry}  
+\usepackage{fancyhdr}       
+
+\newcommand{\Var}{\operatorname{Var}} %% \Var{X}
+\newcommand{\Cov}{\operatorname{Cov}}
+
+\pagestyle{fancy}              
+\lhead{Stat 5930 \newline Homework 1b}   
+\rhead{Warren Keil}
+
+
+
+
+
+
+
+\begin{document}
+\setlength{\parindent}{0cm}   %%%%%%%% KEEP THIS  for block style para. 
+
+Show that
+\[
+\sum(X_i - \bar X)^2 = X'AX  \text{ where  } A = I_n - \frac1nJ_n
+\]
+
+
+\vspace{4mm} 
+
+\textit{Solution.} Starting on the right hand side, we get 
+\begin{align*}
+X'AX &= [X_1, X_2, \ldots, X_n]\begin{bmatrix}
+1-\frac1n & -\frac1n & \cdots & -\frac1n \\
+ -\frac1n & 1  -\frac1n & \cdots &  -\frac1n\\
+ \vdots & \vdots & \ddots & \vdots \\
+  -\frac1n&  -\frac1n &  \hdots & 1 -\frac1n
+  \end{bmatrix} 
+\begin{bmatrix}
+X_1\\
+X_2\\
+\vdots \\
+X_n
+\end{bmatrix} \\
+&=\begin{bmatrix}
+X_1-\frac1n\sum X_i & X_2-\frac1n\sum X_i & \ldots & X_n-\frac1n\sum X_i 
+\end{bmatrix}\begin{bmatrix}
+X_1\\
+X_2\\
+\vdots \\
+X_n
+\end{bmatrix}\\
+&= \begin{bmatrix}
+X_1-\bar X & X_2-\bar X& \ldots & X_n-\bar X
+\end{bmatrix}\begin{bmatrix}
+X_1\\
+X_2\\
+\vdots \\
+X_n
+\end{bmatrix}\\ 
+&=\begin{bmatrix}
+X_1^2-X_1\bar X + X_2^2-X_2\bar X + \cdots + X_n^2-X_n\bar X 
+\end{bmatrix}   \\
+(\text{adding zero this step)}&= \begin{bmatrix}
+X_1^2-X_1\bar X -X_1\bar X + X_1 \bar X + X_2^2-X_2\bar X -X_2\bar X + X_2 \bar X+ \cdots + X_n^2-X_n\bar X -X_n\bar X + X_n \bar X
+\end{bmatrix} \\
+&=  \begin{bmatrix}
+X_1^2-2X_1\bar X  + X_1 \bar X + X_2^2-2X_2\bar X + X_2 \bar X+ \cdots + X_n^2 -2X_n\bar X + X_n \bar X
+\end{bmatrix}\\
+&= \sum X_i^2 -2\bar X \sum X_i + \bar X \sum X_i \\
+&=  \sum X_i^2 -2\bar X \sum X_i + n\bar X \bar X \\
+&= \sum( X_i^2 - 2 \bar X X_i + \bar X^2) \\ 
+&= \sum ( X_i - \bar X)^2 
+\end{align*} 
+\begin{flushright} 
+\(\qed\)
+\end{flushright} 
+
+
+\newpage
+
+\begin{table}[ht]
+\caption{Significant and Important Variable Prediction} % title of Table
+\centering % used for centering table
+\begin{tabular}{c c c c c c c } % centered columns (4 columns)
+\hline\hline %inserts double horizontal lines
+Model & X1 & X2 & X3 \\ [0.5ex] % inserts table
+%heading
+\hline % inserts single horizontal line
+Random Survival Forest & .990 & .316 & .710  \\ % inserting body of the table
+Cox Proportional Hazards & .964 & .062 & .346 \\ [1ex] % [1ex] adds vertical space
+\hline %inserts single line
+\end{tabular}
+\label{table:nonlin} % is used to refer this table in the text
+\end{table}
+
+\vspace{1cm}
+
+\begin{itemize}
+\item Used \(\alpha = .05\) for significance level for Cox model
+\item For each variable, we took the mean number of times that the said variable had a higher importance score than all three noise variables. 
+\end{itemize}
+\end{document} 
+
+
+
+
+
+
+
+
+
+
+
+
+
